@@ -3,6 +3,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import Select
+import time
 
 def scrape_data(security_input, from_date, to_date):
     # Initialize Chrome webdriver
@@ -11,10 +13,22 @@ def scrape_data(security_input, from_date, to_date):
     try:
         driver.get("https://www.bseindia.com/corporates/ann.html")
 
-        # Find the input fields and input the security name/code/id
+        # Wait for 20 seconds after opening the website
+        time.sleep(1)
+
+
+        # Find the security input box
         security_input_box = driver.find_element(By.XPATH, "/html/body/div[1]/div[5]/div[1]/div[1]/div[4]/div/form/div/input")
+
+        # Input the security name
         security_input_box.clear()
         security_input_box.send_keys(security_input)
+
+        # Click on the input box again to focus on it
+        security_input_box.click()
+
+        # Hit the Enter key
+        security_input_box.send_keys(Keys.RETURN)
 
         # Click on the From Date input box to open the calendar picker
         from_date_input_box = driver.find_element(By.XPATH, "/html/body/div[1]/div[5]/div[1]/div[2]/div[2]/input")
@@ -30,17 +44,24 @@ def scrape_data(security_input, from_date, to_date):
         # Select the To Date from the calendar picker
         select_date(driver, to_date)
 
-        # Submit the form
-        security_input_box.send_keys(Keys.RETURN)
+
+        # Find the dropdown menu element
+        dropdown_menu = driver.find_element(By.ID, "ddlPeriod")
+
+        # Create a Select object
+        select = Select(dropdown_menu)
+
+        # Select "Company Update" from the dropdown menu
+        select.select_by_visible_text("Company Update")
+
+         # Click on the submit button
+        submit_button = driver.find_element(By.XPATH, "/html/body/div[1]/div[5]/div[1]/div[3]/div[5]/input[1]")
+        submit_button.click()
 
         # Wait for the page to load
-        WebDriverWait(driver, 20).until(EC.url_contains("some_identifier_in_the_url"))
+        time.sleep(20)
 
-        # Once the page has loaded, you can scrape the data from the page using BeautifulSoup or Selenium
-        # For example:
-        # soup = BeautifulSoup(driver.page_source, 'html.parser')
-        # rows = soup.find_all('tr', class_='table-row')
-        # (Scrape data as needed)
+
 
     finally:
         # Close the webdriver session
