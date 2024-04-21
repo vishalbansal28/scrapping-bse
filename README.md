@@ -73,7 +73,7 @@ PyMongo.
 # Purpose
 This script is designed to automate the process of scraping corporate announcement data from the BSE website. It fetches information such as heading, PDF link, and XBRL code from the announcement tables.
 
-##How it Works
+## How it Works
 The script launches a Chrome WebDriver and navigates to the BSE corporate announcements page.
 It prompts the user to input the security name, from date, to date, and category for scraping.
 Using Selenium, it interacts with the webpage to input the provided information and submit the form.
@@ -82,7 +82,7 @@ It saves the extracted data to an Excel file named extracted_data.xlsx.
 Additionally, it uploads the data to a MongoDB database for storage.
 
 
-##Technologies Used
+## Technologies Used
 Python: The script is written in Python, making use of various libraries such as Selenium, Pandas, and PyMongo.
 Selenium: Used for web scraping and browser automation.
 Pandas: Utilized for data manipulation and conversion.
