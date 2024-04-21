@@ -23,7 +23,7 @@ This Python script allows you to scrape corporate announcement data from the Bom
     ```
 
 ## Usage
-
+# For get_bse_data.py:
 1. Run the `scrape_data.py` script:
 
     ```bash
@@ -32,7 +32,25 @@ This Python script allows you to scrape corporate announcement data from the Bom
 
 2. Follow the prompts to enter the security name, from date, to date, and category for scraping.
 
-3. The script will scrape the data, save it to an Excel file named `extracted_data.xlsx`, and upload it to a MongoDB database.
+3. The script will scrape the data, save it to an Excel file named `extracted_data.xlsx`
+  
+  
+# For store_data_mongodb.py
+# Excel to MongoDB Converter
+
+This Python script (`store_data_mongodb.py`) allows you to convert data from an Excel file into MongoDB and upload it to a database collection.
+
+## Usage
+
+1. Ensure you have a MongoDB database set up and running.
+
+2. Run the `store_data_mongodb.py` script:
+
+    ```bash
+    python store_data_mongodb.py
+    ```
+
+3. The script will read data from the Excel file `extracted_data.xlsx`, convert it into MongoDB documents, and upload it to the specified database collection.
 
 ## Configuration
 
