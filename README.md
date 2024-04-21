@@ -45,11 +45,11 @@ client = MongoClient('mongodb+srv://username:password@cluster.mongodb.net/')
 ### Replace username, password, and cluster.mongodb.net with your MongoDB credentials and cluster details.
 
 ## Requirements
-Python 
-Selenium
-Pandas
-Openpyxl
-PyMongo
+Python,
+Selenium,
+Pandas,
+Openpyxl,
+PyMongo.
 
 ## About the Script
 # Purpose
