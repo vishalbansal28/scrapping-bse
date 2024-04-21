@@ -39,7 +39,7 @@ This Python script allows you to scrape corporate announcement data from the Bom
 You may need to configure the MongoDB connection string in the `scrape_data.py` script to match your MongoDB setup. Update the following line with your MongoDB connection string:
 
 ```python
-client = MongoClient('mongodb+srv://username:password@cluster.mongodb.net/')
+client = MongoClient('mongodb+srv://username:password@cluster.mongodb.net/') ```
 
 # Replace username, password, and cluster.mongodb.net with your MongoDB credentials and cluster details.
 
