@@ -42,7 +42,7 @@ You may need to configure the MongoDB connection string in the `scrape_data.py` 
 client = MongoClient('mongodb+srv://username:password@cluster.mongodb.net/')
 ```
 
-# Replace username, password, and cluster.mongodb.net with your MongoDB credentials and cluster details.
+### Replace username, password, and cluster.mongodb.net with your MongoDB credentials and cluster details.
 
 ## Requirements
 Python 
