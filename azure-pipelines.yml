@@ -1,0 +1,86 @@
+trigger:
+  - main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: DownloadBuildArtifact@1
+  displayName: 'Download ChromeDriver'
+  inputs:
+    buildType: 'current'
+    artifactName: 'ChromeDriver'
+    downloadPath: '$(System.DefaultWorkingDirectory)/chromedriver'
+
+- task: PythonScript@0
+  displayName: 'Install Dependencies'
+  inputs:
+    scriptSource: 'inlineScript'
+    inlineScript: |
+      python -m pip install -r requirements.txt
+
+- task: PythonScript@0
+  displayName: 'Run Python Tests'
+  inputs:
+    scriptSource: 'inlineScript'
+    inlineScript: |
+      python -m pytest get_bse_data.py
+
+- task: PythonScript@0
+  displayName: 'Upload Data to MongoDB'
+  inputs:
+    scriptSource: 'file'
+    scriptPath: 'store_data_mongodb.py' 
+
+- task: PublishPipelineArtifact@1
+  displayName: 'Publish Test Results'
+  inputs:
+    targetPath: '$(System.DefaultWorkingDirectory)/extracted_data.xlsx'
+    artifactName: 'TestResults'
+content_copy
+Use code with caution.
+Yaml
+
+Explanation:
+
+trigger: The pipeline triggers on pushes to the main branch of your repository.
+
+pool: The pipeline runs on a virtual machine with the ubuntu-latest image.
+
+steps:
+
+DownloadBuildArtifact: Downloads the ChromeDriver artifact from your previous build. Make sure you've published it as an artifact.
+
+PythonScript (Install Dependencies): Installs the Python packages from your requirements.txt file.
+
+PythonScript (Run Python Tests): Runs your Python tests using pytest.
+
+PythonScript (Upload Data to MongoDB): Executes the store_data_mongodb.py script to upload data to MongoDB.
+
+PublishPipelineArtifact: Publishes the extracted_data.xlsx file as an artifact.
+
+Important Notes:
+
+artifactName: Update this to the name of the artifact where you published the ChromeDriver.
+
+scriptPath: Make sure this points correctly to your store_data_mongodb.py file in your repository.
+
+MongoDB Connection: Ensure your store_data_mongodb.py file contains the correct connection string for your MongoDB database. You might want to use variable groups or secrets in Azure DevOps to manage sensitive information.
+
+Error Handling: Consider adding error handling to your pipeline to catch potential issues, like file not found errors or errors during the MongoDB upload.
+
+How to Use:
+
+Create a New Pipeline: Go to your Azure DevOps project, navigate to "Pipelines," and create a new pipeline.
+
+Choose YAML: Select "YAML" as your pipeline type.
+
+Select Repository: Choose your GitHub repository and branch.
+
+Paste YAML: Copy the YAML code above into the editor.
+
+Customize: Make sure to update the artifactName and scriptPath values.
+
+Save and Run: Save the pipeline and run it.
+
+Now, every time you push to the main branch of your repository, this pipeline will run, downloading ChromeDriver, installing dependencies, running tests, uploading data to MongoDB, and publishing the extracted_data.xlsx file as an artifact.
