@@ -1,93 +1,96 @@
-# BSE Data Scraper
 
-This Python script allows you to scrape corporate announcement data from the Bombay Stock Exchange (BSE) website and store it in both an Excel file and a MongoDB database.
+## Scrapping-BSE
 
-## Installation
+This repository contains a Python project for scraping corporate announcement data from the Bombay Stock Exchange (BSE) website. It includes data extraction, testing, MongoDB storage, and an automated Azure Pipeline for continuous integration.
 
-1. Clone this repository to your local machine:
+**Project Structure**
 
-    ```bash
-    git clone https://github.com/yourusername/bse-data-scraper.git
-    ```
-
-2. Navigate to the project directory:
-
-    ```bash
-    cd bse-data-scraper
-    ```
-
-3. Install the required Python packages using pip:
-
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-## Usage
-# For get_bse_data.py:
-1. Run the `scrape_data.py` script:
-
-    ```bash
-    python scrape_data.py
-    ```
-
-2. Follow the prompts to enter the security name, from date, to date, and category for scraping.
-
-3. The script will scrape the data, save it to an Excel file named `extracted_data.xlsx`
-  
-  
-# For store_data_mongodb.py
-# Excel to MongoDB Converter
-
-This Python script (`store_data_mongodb.py`) allows you to convert data from an Excel file into MongoDB and upload it to a database collection.
-
-## Usage
-
-1. Ensure you have a MongoDB database set up and running.
-
-2. Run the `store_data_mongodb.py` script:
-
-    ```bash
-    python store_data_mongodb.py
-    ```
-
-3. The script will read data from the Excel file `extracted_data.xlsx`, convert it into MongoDB documents, and upload it to the specified database collection.
-
-## Configuration
-
-You may need to configure the MongoDB connection string in the `scrape_data.py` script to match your MongoDB setup. Update the following line with your MongoDB connection string:
-
-```python
-client = MongoClient('mongodb+srv://username:password@cluster.mongodb.net/')
+```
+scrapping-bse/
+├── get_bse_data.py         # Main scraper script
+├── store_data_mongodb.py   # Script for uploading scraped data to MongoDB
+├── test_scrapper.py        # Unit tests for the scraper
+├── requirements.txt       # List of Python dependencies
+├── extracted_data.xlsx    # Sample Excel file (optional)
+└── azure-pipelines.yml     # Azure Pipeline configuration
 ```
 
-### Replace username, password, and cluster.mongodb.net with your MongoDB credentials and cluster details.
+**Features**
 
-## Requirements
-Python,
-Selenium,
-Pandas,
-Openpyxl,
-PyMongo.
+* **Web Scraping:**  Uses Selenium to extract corporate announcements data from the BSE website, including headings, PDF links, and XBRL codes.
+* **Data Storage:** Saves extracted data in an Excel file (`extracted_data.xlsx`) and uploads it to a MongoDB database.
+* **Testing:**  Includes unit tests (using `pytest`) to verify the scraper's functionality.
+* **Azure Pipeline:**  An automated pipeline (defined in `azure-pipelines.yml`) for:
+    * Installing dependencies
+    * Running tests
+    * Uploading data to MongoDB
+    * Publishing test results
 
-## About the Script
-# Purpose
-This script is designed to automate the process of scraping corporate announcement data from the BSE website. It fetches information such as heading, PDF link, and XBRL code from the announcement tables.
+**Prerequisites**
 
-## How it Works
-The script launches a Chrome WebDriver and navigates to the BSE corporate announcements page.
-It prompts the user to input the security name, from date, to date, and category for scraping.
-Using Selenium, it interacts with the webpage to input the provided information and submit the form.
-The script then scrapes data from the announcement tables, including headings, PDF links, and XBRL codes.
-It saves the extracted data to an Excel file named extracted_data.xlsx.
-Additionally, it uploads the data to a MongoDB database for storage.
+* Python 3.x
+* MongoDB account (with a database and collection set up)
+* ChromeDriver compatible with your environment (download from [https://chromedriver.chromium.org/downloads](https://chromedriver.chromium.org/downloads))
+* Azure DevOps account (for running the pipeline)
 
+**Installation**
 
-## Technologies Used
-Python: The script is written in Python, making use of various libraries such as Selenium, Pandas, and PyMongo.
-Selenium: Used for web scraping and browser automation.
-Pandas: Utilized for data manipulation and conversion.
-Openpyxl: Used to interact with Excel files.
-PyMongo: Used to interact with MongoDB databases.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/scrapping-bse.git
+   cd scrapping-bse
+   ```
 
+2. Create a virtual environment (recommended):
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate
+   ```
 
-## Code is 100% working in case you come across any error please contact me at +919057291541 or bvansal.vb@gmail.com.
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+**Usage**
+
+1. **Scrape Data:** Run `get_bse_data.py`. The script will prompt you for:
+    * Security name
+    * From date (YYYY-MM-DD)
+    * To date (YYYY-MM-DD)
+    * Category (e.g., Board Meetings, Financial Results)
+
+2. **Upload to MongoDB:**  Run `store_data_mongodb.py` to upload data from `extracted_data.xlsx` to your MongoDB collection.
+
+**Running the Azure Pipeline**
+
+1. **Create a new pipeline:** Go to your Azure DevOps project and create a new pipeline.
+2. **Choose YAML:** Select "YAML" as your pipeline type.
+3. **Select Repository:** Choose your GitHub repository (`scrapping-bse`) and branch (`main`).
+4. **Paste YAML:** Copy the content of `azure-pipelines.yml` into the editor.
+5. **Customize:** Update the `artifactName` for ChromeDriver (if you're not using the automatic download).
+6. **Save and Run:** Save the pipeline and run it.
+
+**Troubleshooting**
+
+* **ChromeDriver Compatibility:** Ensure you're using a ChromeDriver version compatible with your browser and operating system (OS).
+* **MongoDB Connection:** Double-check your MongoDB connection string and authentication settings in `store_data_mongodb.py`.
+* **Azure Pipeline Setup:** Ensure you've configured your pipeline properly, including the correct artifact name, script path, and any necessary secrets or variable groups.
+
+**Contribute**
+
+Feel free to contribute to this project by:
+
+* **Submitting bug reports**
+* **Suggesting improvements**
+* **Adding new features**
+
+**License**
+
+This project is licensed under the MIT License.
+
+**Disclaimer**
+
+This project is for educational purposes only. It is provided "as is" without warranty of any kind. Use at your own risk. 
+
+```
